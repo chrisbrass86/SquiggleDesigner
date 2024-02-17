@@ -11,6 +11,7 @@
 		83AB682B2B6843B100A01190 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AB682A2B6843B100A01190 /* ContentView.swift */; };
 		83AB682D2B6843B200A01190 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83AB682C2B6843B200A01190 /* Assets.xcassets */; };
 		83AB68302B6843B200A01190 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83AB682F2B6843B200A01190 /* Preview Assets.xcassets */; };
+		83AB68392B68442600A01190 /* Squiggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AB68382B68442600A01190 /* Squiggle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		83AB682A2B6843B100A01190 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		83AB682C2B6843B200A01190 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		83AB682F2B6843B200A01190 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		83AB68382B68442600A01190 /* Squiggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Squiggle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 				83AB682A2B6843B100A01190 /* ContentView.swift */,
 				83AB682C2B6843B200A01190 /* Assets.xcassets */,
 				83AB682E2B6843B200A01190 /* Preview Content */,
+				83AB68382B68442600A01190 /* Squiggle.swift */,
 			);
 			path = SquiggleDesigner;
 			sourceTree = "<group>";
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83AB68392B68442600A01190 /* Squiggle.swift in Sources */,
 				83AB682B2B6843B100A01190 /* ContentView.swift in Sources */,
 				83AB68292B6843B100A01190 /* SquiggleDesignerApp.swift in Sources */,
 			);
