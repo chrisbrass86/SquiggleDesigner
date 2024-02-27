@@ -7,46 +7,11 @@
 
 import SwiftUI
 
-struct SheetView: View {
-    @Environment(\.dismiss) var dismiss
-    
-    var controlPoints: [CGPoint]
-    var curvePoints: [CGPoint]
-    
-    var body: some View {
-        NavigationView {
-            List {
-                Section(header: Text("Control Points")) {
-                    ForEach(0..<controlPoints.count, id: \.self) { index in
-                        HStack {
-                            Text("Point \(index + 1)")
-                            Spacer()
-                            Text("x: \(Int(controlPoints[index].x)), y: \(Int(controlPoints[index].y))")
-                        }
-                    }
-                }
-                
-                Section(header: Text("Curve Points")) {
-                    ForEach(0..<curvePoints.count, id: \.self) { index in
-                        HStack {
-                            Text("Point \(index + 1)")
-                            Spacer()
-                            Text("x: \(Int(curvePoints[index].x)), y: \(Int(curvePoints[index].y))")
-                        }
-                    }
-                }
-            }
-            .navigationTitle("Positions")
-        }
-    }
-}
-
-
-
 struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
     
-    @State private var showingSheet = false
+    @State private var isShowingOverlay = false
+
 
     @State static private var startControlPoints: [CGPoint] = [
         CGPoint(x: 21, y: 321), CGPoint(x: 101, y: 285),
@@ -67,20 +32,64 @@ struct ContentView: View {
     @State private var showControlPoints: Bool = true
     
     var body: some View {
+        ZStack {
         VStack {
             Text("Squiggle Designer").font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
             Divider()
-            GeometryReader { geometry in
-                ZStack {
-                    Squiggle(controlPoints: controlPoints, points: curvePoints)
-                        .stroke(colorScheme == .dark ? Color.white : Color.black, lineWidth: 3)
-                    pointDrawer
-                }
+            ZStack {
+                Squiggle(controlPoints: controlPoints, points: curvePoints)
+                    .stroke(colorScheme == .dark ? Color.white : Color.black, lineWidth: 3)
+                pointDrawer
             }
             Spacer()
-            Divider()
-           appMenu
+            appMenu
         }
+        if isShowingOverlay {
+            Color.black
+                .opacity(0.5)
+                .edgesIgnoringSafeArea(.all)
+                .onTapGesture {
+                    self.isShowingOverlay = false
+                }
+            
+            VStack {
+                NavigationView {
+                    List {
+                        Section(header: Text("Control Points")) {
+                            ForEach(0..<controlPoints.count, id: \.self) { index in
+                                HStack {
+                                    Text("Point \(index + 1)")
+                                    Spacer()
+                                    Text("x: \(Int(controlPoints[index].x)), y: \(Int(controlPoints[index].y))")
+                                }
+                            }
+                        }
+                        
+                        Section(header: Text("Curve Points")) {
+                            ForEach(0..<curvePoints.count, id: \.self) { index in
+                                HStack {
+                                    Text("Point \(index + 1)")
+                                    Spacer()
+                                    Text("x: \(Int(curvePoints[index].x)), y: \(Int(curvePoints[index].y))")
+                                }
+                            }
+                        }
+                    }
+                    .navigationTitle("Positions")
+                }
+                Button("Close") {
+                    self.isShowingOverlay = false
+                }
+                .padding()
+                .background(Color.white)
+                .cornerRadius(8)
+            }
+            .padding()
+            .background(Color.white)
+            .cornerRadius(16)
+            .padding()
+        }
+    }
     }
     
     private var pointDrawer: some View {
@@ -119,29 +128,25 @@ struct ContentView: View {
     
     private var appMenu: some View {
         HStack{
-            Button("Reset") {
-                controlPoints = ContentView.startControlPoints
-                curvePoints = ContentView.startCurvePoints
-            }
-            Spacer()
-            Button("Log positions") {
-                showingSheet.toggle()
-            }
-            .sheet(isPresented: $showingSheet) {
-                SheetView(controlPoints: controlPoints, curvePoints: curvePoints)
-            }
-            Spacer()
-            Button("Toggle curve points") {
-                showCurvePoints.toggle()
-            }
-            Spacer()
-            Button("Toggle control points") {
-                showControlPoints.toggle()
+            Menu ("Options",systemImage: "plus.app") {
+                Button("Reset") {
+                    controlPoints = ContentView.startControlPoints
+                    curvePoints = ContentView.startCurvePoints
+                }
+                Button("Log positions") {
+                    self.isShowingOverlay = true
+                }
+                Button("Toggle curve points") {
+                    showCurvePoints.toggle()
+                }
+                Button("Toggle control points") {
+                    showControlPoints.toggle()
+                }
             }
             
+            .padding()
+            .font(.largeTitle)
         }
-        .padding()
-        .font(.subheadline)
     }
 }
 
